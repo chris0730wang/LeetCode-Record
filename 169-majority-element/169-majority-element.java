@@ -1,18 +1,15 @@
 class Solution {
     public int majorityElement(int[] nums) {
         int len = nums.length;
-        int ans = nums[0], fre = 1;
-
-        for (int i = 1; i < len; i++){
-            if (nums[i] == ans){
-                fre++;
-            } else if (fre > 0){
-                fre--;
-            } else {
-                ans = nums[i];
-                fre = 1;
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for (int n: nums){
+            System.out.println(n);
+            int cur = map.getOrDefault(n, 0) + 1;
+            if (cur > (len >> 1)){
+                return n;
             }
+            map.put(n, cur);
         }
-        return ans;
+        return -1;
     }
 }
