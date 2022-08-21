@@ -17,10 +17,19 @@ int listlen(struct ListNode* head){
 
 struct ListNode* reverseList(struct ListNode* head){
     if(head == NULL || head->next == NULL) return head;
-    struct ListNode *prev = reverseList(head->next);
-    head->next->next = head;
-    head->next = NULL;
-    return prev;
+    // struct ListNode *prev = reverseList(head->next);
+    // head->next->next = head;
+    // head->next = NULL;
+    // return prev;
+    struct ListNode *temp;
+    struct ListNode *cur = head;
+    while(head->next != NULL){ 
+        temp = head->next;
+        head->next = head->next->next;
+        temp->next = cur;
+        cur = temp;
+    }
+    return cur;
 }
 
 int pairSum(struct ListNode* head){
