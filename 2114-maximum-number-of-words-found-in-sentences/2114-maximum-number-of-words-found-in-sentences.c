@@ -5,6 +5,7 @@ int mostWordsFound(char ** sentences, int sentencesSize){
     for(int i=0; i<sentencesSize; i++){
         char *locate = sentences[i];
         while(*locate){
+            printf("%c", *locate);
             if(*locate == ' ') times++;
             *locate = *(sentences[i] + gap++);
         }
