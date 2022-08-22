@@ -1,19 +1,18 @@
 
 
 char * defangIPaddr(char * address){
-    int len = strlen(address);
-    char *re = (char*)malloc(24);
-    char *out = re;
-    while (*address) {
-        if (*address == '.') {
+    char *res = malloc(24);
+    char *out = res;
+    while(*address){
+        if(*address == '.'){
             *out++ = '[';
             *out++ = '.';
             *out++ = ']';
             *address++;
-        } else {
+        }else{
             *out++ = *address++;
         }
     }
     *out = '\0';
-    return re;
+    return res;
 }
