@@ -8,7 +8,7 @@ char * defangIPaddr(char * address){
             *out++ = '[';
             *out++ = '.';
             *out++ = ']';
-            *address++;
+            address++;
         }else{
             *out++ = *address++;
         }
