@@ -13,8 +13,8 @@ char ** cellsInRange(char * s, int* returnSize){
         ret[i] = (char*) malloc(3 * sizeof(char));
     }
     i = 0;
-    for (ch = s[0]; ch <= s[3]; ++ch) {
-        for (j = s[1]; j <= s[4]; ++j) {
+    for (ch = s[0]; ch <= s[3]; ch++) {
+        for (j = s[1]; j <= s[4]; j++) {
             ret[i][0] = ch;
             ret[i][1] = j;
             ret[i][2] = '\0';
