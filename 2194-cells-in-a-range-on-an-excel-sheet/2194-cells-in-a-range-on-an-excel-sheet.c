@@ -21,5 +21,10 @@ char ** cellsInRange(char * s, int* returnSize){
             i++;
         }
     }
+    for(int i=0; i<*returnSize; i++){
+        for(int index=0; index<2; index++) {
+            printf("%c", *(ret[i] + index));
+        }
+    }
     return ret;
 }
