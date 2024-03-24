@@ -1,9 +1,20 @@
+int cmp(const void *a, const void *b){
+    return (*(int*) a - *(int*)b);
+}
 int countPairs(int* nums, int numsSize, int target){
-    int sum, count = 0;
-    for(int i = 0; i < numsSize - 1; i++){
-        for(int j = i + 1; j < numsSize; j++){
-            if(nums[i] + nums[j] < target) count++;
+    qsort(nums, numsSize, sizeof(int), cmp);
+    int left = 0;
+    int right = numsSize - 1;
+    int ret = 0;
+    while(left < right){
+        if(nums[left] + nums[right] >= target){
+            right--;
+        }
+        else{
+            ret += right - left;
+            left++;
+            right = numsSize - 1;
         }
     }
-    return count;
+    return ret;
 }
