@@ -12,24 +12,23 @@
  * }
  */
 public class Solution {
-    int ret = 0;
+    
     public int SumOfLeftLeaves(TreeNode root) {
         if(root.left == null && root.right == null) return 0;
+        int ret = 0;
         Queue<TreeNode> qNode = new Queue<TreeNode>();
-        Queue<TreeNode> qLeft = new Queue<TreeNode>();
         qNode.Enqueue(root);
         while(qNode.Count > 0){
             TreeNode tmpNode = qNode.Dequeue();
-            if(tmpNode != null){
-                qNode.Enqueue(tmpNode.left);
-                qNode.Enqueue(tmpNode.right);
-                qLeft.Enqueue(tmpNode.left);
+            if(tmpNode.left != null){
+                if(tmpNode.left.left == null && tmpNode.left.right == null){
+                    ret += tmpNode.left.val;
+                }else{
+                    qNode.Enqueue(tmpNode.left);
+                }
             }
-        }
-        while(qLeft.Count > 0){
-            TreeNode tmpNode = qLeft.Dequeue();
-            if(tmpNode != null){
-                if(tmpNode.left == null && tmpNode.right == null) ret += tmpNode.val;
+            if(tmpNode.right != null){
+                qNode.Enqueue(tmpNode.right);
             }
         }
         return ret;
