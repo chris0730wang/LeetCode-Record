@@ -2,16 +2,11 @@ int hammingWeight(int n) {
     int tmp = 2;
     // int times = 1;
     int ret = 0;
-    while(n > 1){
-        while(1){
-            if(tmp == 1073741824 || tmp * 2 > n) break;
-            tmp *= 2;
-        }
-        n -= tmp;
-        tmp = 2;
-        ret++;
+    while(n > 0){
+        if(n % 2 == 1) ret++;
+        n /= 2;
     }
-    ret += n;
+    
     return ret;
 }
 
