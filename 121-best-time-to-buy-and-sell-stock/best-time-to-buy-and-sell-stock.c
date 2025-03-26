@@ -1,9 +1,16 @@
 int maxProfit(int* prices, int pricesSize) {
-    int min = prices[0];
+    int l = 0, r = 1;
     int res = 0;
-    for(int i = 1; i < pricesSize; i++){
-        res = prices[i] - min > res ? prices[i] - min : res;
-        min = prices[i] < min ? prices[i] : min;
+
+    while (r < pricesSize) {
+        if(prices[l] < prices[r]){
+            int val = prices[r] - prices[l];
+            res = val > res ? val : res;
+        }
+        else{
+            l = r;
+        }
+        r++;
     }
     return res;
 }
