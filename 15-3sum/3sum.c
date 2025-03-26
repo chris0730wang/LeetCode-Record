@@ -4,41 +4,41 @@
  * Note: Both returned array and *columnSizes array must be malloced, assume caller calls free().
  */
 int cmp(const void *a, const void *b){
-    return *(int*)a - *(int*)b;
+    return (*(int*)a - *(int*)b);
 }
 int** threeSum(int* nums, int numsSize, int* returnSize, int** returnColumnSizes) {
-    qsort(nums, numsSize, sizeof(int), cmp);
-    int **ret = (int **)malloc(sizeof(int *) * (numsSize * numsSize));
-    *returnColumnSizes = (int *)malloc(sizeof(int) * (numsSize * numsSize));
+    
+    int** res = (int**)malloc(sizeof(int*) * (numsSize * numsSize));
+    *returnColumnSizes = (int*)malloc(sizeof(int*) * (numsSize * numsSize));
     *returnSize = 0;
-    for(int i = 0; i < numsSize - 2; i++){
+    qsort(nums, numsSize, sizeof(int), cmp);
+    int left, right, i, target, val;
+    for(i = 0; i < numsSize - 2; i++){
         if(i > 0 && nums[i] == nums[i - 1]) continue;
-        int l = i + 1, r = numsSize - 1;
-        while(l < r){
-            int val = nums[i] + nums[l] + nums[r];
+		if(nums[i] > 0) break;
+        left = i + 1;
+        right = numsSize - 1;
+        while(left < right){
+            val = nums[i] + nums[left] + nums[right];
             if(val == 0){
-                ret[*returnSize] = (int*)malloc(sizeof(int) * 3);
-                ret[*returnSize][0] = nums[i];
-                ret[*returnSize][1] = nums[l];
-                ret[*returnSize][2] = nums[r];
+                res[(*returnSize)] = (int*)malloc(sizeof(int) * 3);
+                res[(*returnSize)][0] = nums[i];
+                res[(*returnSize)][1] = nums[left];
+                res[(*returnSize)][2] = nums[right];
                 (*returnColumnSizes)[*returnSize] = 3;
                 (*returnSize)++;
-                while (l < r && nums[l] == nums[l + 1]) {
-                    l++;
-                }
-                while (l < r && nums[r] == nums[r - 1]) {
-                    r--;
-                }
-                l++;
-                r--;
+                while(left < right && nums[left] == nums[left + 1]) left++;
+				while(left < right && nums[right] == nums[right - 1]) right--;
+				left++;
+				right--;
             }
             else if(val < 0){
-                l++;
+                left++;
             }
             else {
-                r--;
+                right--;
             }
         }
     }
-    return ret;
+    return res;
 }
