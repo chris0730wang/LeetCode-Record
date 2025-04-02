@@ -6,23 +6,16 @@
  *     struct TreeNode *right;
  * };
  */
+
 struct TreeNode* buildTree(int* preorder, int preorderSize, int* inorder, int inorderSize) {
     if(preorderSize == 0 || inorderSize == 0) return NULL;
-
-    struct TreeNode* root = (struct TreeNode*)malloc(sizeof(struct TreeNode));
-    root->val = preorder[0];
-    root->left = NULL;
-    root->right = NULL;
-
-    int index = 0;
-    for(index = 0; index < inorderSize; index++){
-        if(inorder[index] == preorder[0]){
-            break;
-        }
+    struct TreeNode* newNode = (struct TreeNode*)malloc(sizeof(struct TreeNode));
+    newNode->val = preorder[0];
+    int i = 0;
+    while(i < inorderSize && inorder[i] != newNode->val){
+        i++;
     }
-
-    root->left = buildTree(preorder + 1, index, inorder, index);
-    root->right = buildTree(preorder + 1 + index, preorderSize - 1 - index, inorder + index + 1, inorderSize - 1 - index);
-
-    return root;
+    newNode->left = buildTree(preorder + 1, i, inorder, i);
+    newNode->right = buildTree(preorder + 1 + i, preorderSize - i - 1, inorder + i + 1, preorderSize - i - 1);
+    return newNode;
 }
