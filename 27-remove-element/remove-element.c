@@ -1,19 +1,12 @@
 int removeElement(int* nums, int numsSize, int val) {
-    int appendIndex = 0;
-    bool find = false;
-    int k = 0;
+    int slow = 0;
 
-    for (int i = 0; i < numsSize; i++) {
-        if (nums[i] == val && !find) {
-            appendIndex = i;
-            find = true;
-        }
-        if (nums[i] != val) {
-            nums[appendIndex] = nums[i];
-            appendIndex++;
-            k++;
+    for (int fast = 0; fast < numsSize; fast++) {
+        if (nums[fast] != val) {
+            nums[slow] = nums[fast];
+            slow++;
         }
     }
 
-    return k;
+    return slow;
 }
