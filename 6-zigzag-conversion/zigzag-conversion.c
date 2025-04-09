@@ -11,7 +11,6 @@ char* convert(char* s, int numRows) {
         int j = i;
         while(j < len){
             res[index] = s[j];
-            printf("%c", res[index]);
             if(flag){
                 j += gap == step ? gap : step - gap;
                 flag = false;
