@@ -1,29 +1,35 @@
-int decode(char s){
-	if(s == 'I') return 1;
-	else if (s == 'V') return 5;
-	else if (s == 'X') return 10;
-	else if (s == 'L') return 50;
-	else if (s == 'C') return 100;
-	else if (s == 'D') return 500;
-	else if (s == 'M') return 1000;
-	else return 0;
-}
-
 int romanToInt(char* s) {
-	int ret = 0, temp = 0;
-    for(int i = 0; i < strlen(s); i++){
-        if(i == strlen(s) - 1){
-            ret += decode(s[i]);
-            break;
+    int sum = 0, tmp = 0;
+    int len = strlen(s);
+    for(int i = 0; i < len; i++){
+        if(s[i] == 'I'){
+            sum += 1;
         }
-		if(decode(s[i + 1]) > decode(s[i])){
-			temp = decode(s[i + 1]) - decode(s[i]);
-			ret += temp;
-			i++;
-			temp = 0;
-			continue;
-		}
-		ret += decode(s[i]);
-	}
-	return ret;
+        else if(s[i] == 'V'){
+            sum += 5;
+            if(i > 0 && s[i - 1] == 'I') sum -= 2;
+        }
+        else if(s[i] == 'X'){
+            sum += 10;
+            if(i > 0 && s[i - 1] == 'I') sum -= 2;
+        }
+        else if(s[i] == 'L'){
+            sum += 50;
+            if(i > 0 && s[i - 1] == 'X') sum -= 20;
+        }
+        else if(s[i] == 'C'){
+            sum += 100;
+            if(i > 0 && s[i - 1] == 'X') sum -= 20;
+        }
+        else if(s[i] == 'D'){
+            sum += 500;
+            if(i > 0 && s[i - 1] == 'C') sum -= 200;
+        }
+        else if(s[i] == 'M'){
+            sum += 1000;
+            if(i > 0 && s[i - 1] == 'C') sum -= 200;
+        }
+    }
+    return sum;
 }
+\
