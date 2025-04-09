@@ -1,21 +1,39 @@
 char* convert(char* s, int numRows) {
     if(numRows == 1) return s;
-    int x = (numRows - 1) * 2;
-    int y = 0;
+    int step = numRows - 1 + numRows - 1;
+    int gap = 0;
     int len = strlen(s);
-    char* ret = (char*)malloc(sizeof(char) * (len + 1));
-    ret[len] = '\0';
     int index = 0;
+    char* res = (char*)malloc(sizeof(char) * (len + 1));
+    res[0] = '\0';
     for(int i = 0; i < numRows; i++){
+        bool flag = true;
         int j = i;
         while(j < len){
-            if(x != 0)ret[index++] = s[j];
-            j += x;
-            if(i != 0 && j < len)ret[index++] = s[j];
-            j += 2 * i;
+            res[index] = s[j];
+            printf("%c", res[index]);
+            if(flag){
+                j += gap == step ? gap : step - gap;
+                flag = false;
+            }
+            else{
+                j += gap == 0 ? step - gap : gap;
+                flag = true;
+            }
+            index++;
         }
-        x -= 2;
+        gap += 2;
     }
-    return ret;
+    res[index] = '\0';
+    return res;
 }
 
+// P       H
+// A     S I
+// Y   I   R
+// P L     I G
+// A       N
+
+
+// 4  => 6 4,2 2,4 6
+// 5  => 8 6,2 4,4 2,6 8
