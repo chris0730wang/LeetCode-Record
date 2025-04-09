@@ -1,10 +1,13 @@
+int cmp(const void *a, const void *b){
+    return *(int*)b - *(int*)a;
+}
+
 int hIndex(int* citations, int citationsSize) {
-    for(int i = citationsSize; i > 0; i--){
-		int times = 0;
-		for(int j = 0; j < citationsSize; j++){
-			if(citations[j] >= i) times++;
-			if(times == i) return i;
-		}
+    int res = 0;
+    qsort(citations, citationsSize, sizeof(int), cmp);
+    for(int i = 0; i < citationsSize; i++){
+		if(citations[i] > res) res++;
+        else break;
 	}
-	return 0;
+	return res;
 }
