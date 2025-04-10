@@ -6,13 +6,11 @@
  *     struct TreeNode *right;
  * };
  */
-
-bool isSame(struct TreeNode* root1, struct TreeNode* root2){
-    if((root1 && !root2) || (!root1 && root2)) return false;
-    if(!root1 && !root2) return true;
-    return root1->val == root2->val && isSame(root1->left, root2->right) && isSame(root1->right, root2->left);
-}
+bool checkNode(struct TreeNode* node1, struct TreeNode* node2){
+    if(!node1 && !node2) return true;
+    if(!node1 || !node2) return false;
+    return node1->val == node2->val && checkNode(node1->right, node2->left) && checkNode(node1->left, node2->right);
+} 
 bool isSymmetric(struct TreeNode* root) {
-    if(!root) return true;
-    return isSame(root->left, root->right);
+    return checkNode(root->left, root->right);
 }
