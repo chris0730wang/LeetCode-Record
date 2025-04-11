@@ -7,22 +7,18 @@
  * };
  */
 
-bool check(struct TreeNode* root, int targetSum, int* sum){
-    if(!root) return false;
-    
-    *sum += root->val;
+bool check(struct TreeNode* root, int sum, int target) {
+    if (!root) return false;
 
-    if(root->left == NULL && root->right == NULL){
-        if(*sum == targetSum) return true;
+    sum += root->val;
+
+    if (!root->left && !root->right) {
+        return sum == target;
     }
 
-    if(check(root->left, targetSum, sum) || check(root->right, targetSum, sum)) return true;
-
-    *sum -= root->val;
-    return false;
-} 
+    return check(root->left, sum, target) || check(root->right, sum, target);
+}
 
 bool hasPathSum(struct TreeNode* root, int targetSum) {
-    int sum = 0;
-    return check(root, targetSum, &sum);
+    return check(root, 0, targetSum);
 }
