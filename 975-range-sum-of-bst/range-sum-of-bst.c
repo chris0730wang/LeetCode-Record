@@ -5,12 +5,18 @@
  *     struct TreeNode *left;
  *     struct TreeNode *right;
  * };
- */ 
+ */
+void sum(struct TreeNode* root, int low, int high, int* res){
+    if(!root) return;
+
+    if(root->val >= low && root->val <= high) *res += root->val;
+    sum(root->right, low, high, res);
+    sum(root->left, low, high, res);
+}
+
 int rangeSumBST(struct TreeNode* root, int low, int high) {
-    int ret = 0;
-    if(!root) return 0;
-    if(root->val >= low && root->val <= high) ret += root->val;
-    if(root->left) ret += rangeSumBST(root->left, low, high);
-    if(root->right) ret += rangeSumBST(root->right, low, high);
-    return ret;
+    int* res = (int*)malloc(sizeof(int));
+    *res = 0;
+    sum(root, low, high, res);
+    return *res;
 }
