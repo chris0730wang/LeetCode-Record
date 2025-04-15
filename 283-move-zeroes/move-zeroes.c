@@ -1,13 +1,14 @@
 void moveZeroes(int* nums, int numsSize) {
-    for(int i = 0; i < numsSize; i++){
-        if(nums[i] == 0){
-            int j = i + 1;
-            while(j < numsSize && nums[j] == 0) j++;
-            if(j == numsSize) return;
-            int tmp = nums[i];
-            nums[i] = nums[j];
-            nums[j] = tmp;
+    int index = 0;  // 指向下一個要放非 0 元素的位置
+
+    for (int i = 0; i < numsSize; i++) {
+        if (nums[i] != 0) {
+            nums[index++] = nums[i];
         }
     }
-    return;
+
+    // 將剩下的都設為 0
+    while (index < numsSize) {
+        nums[index++] = 0;
+    }
 }
