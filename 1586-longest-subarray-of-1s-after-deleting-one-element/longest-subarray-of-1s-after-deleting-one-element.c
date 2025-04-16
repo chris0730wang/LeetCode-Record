@@ -1,21 +1,16 @@
 int longestSubarray(int* nums, int numsSize) {
-    int zeroidx = -1;
-    bool zerochk = false;
-    int left = 0, res = 0;
+    int left = 0, zeroCount = 0, res = 0;
+    
     for(int right = 0; right < numsSize; right++){
-        if(zerochk && nums[right] == 0){
-            if(right - left - 1 > res){
-                res = right - left - 1;
-            }
-            left = zeroidx + 1;
-            zeroidx = right;
+        if (nums[right] == 0) zeroCount++;
+
+        while (zeroCount > 1) {
+            if (nums[left] == 0) zeroCount--;
+            left++;
         }
 
-        if(nums[right] == 0) {
-            zeroidx = zerochk ? zeroidx : right;
-            zerochk = true;
-        }
-
+        // 長度是 right - left，但要刪一個元素
+        res = (right - left) > res ? (right - left) : res;
     }
-    return res > numsSize - left - 1 ? res : numsSize - left - 1;
+    return res;
 }
