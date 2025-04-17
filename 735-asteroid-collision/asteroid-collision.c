@@ -2,34 +2,31 @@
  * Note: The returned array must be malloced, assume caller calls free().
  */
 int* asteroidCollision(int* asteroids, int asteroidsSize, int* returnSize) {
-    int* res = (int*)malloc(sizeof(int) * asteroidsSize);
-    *returnSize = 0;
+    int* stack = (int*)malloc(sizeof(int) * asteroidsSize);
+    int top = -1;
 
-    for(int i = 0; i < asteroidsSize; i++){
-        int speed = asteroids[i];
-        int index = (*returnSize) - 1;
-        res[(*returnSize)++] = speed;
-        if(speed < 0){
-            while(index >= 0 && speed < 0){
-                if(res[index] < 0){
-                    res[(*returnSize) - 1] = speed;
-                    break;
-                }
-                int sum = res[index] + speed;
-                if(sum > 0) {
-                    (*returnSize)--;
-                    break;
-                }
-                else if(sum == 0) {
-                    (*returnSize) = index;
-                    break;
-                }
-                else{
-                    res[index--] = speed;
-                    (*returnSize)--;
-                }
+    for (int i = 0; i < asteroidsSize; i++) {
+        int cur = asteroids[i];
+        bool destroyed = false;
+
+        while (top >= 0 && cur < 0 && stack[top] > 0) {
+            if (stack[top] < -cur) {
+                top--; // 當前小行星爆炸，繼續檢查前一個
+            } else if (stack[top] == -cur) {
+                top--; // 兩個都爆炸
+                destroyed = true;
+                break;
+            } else {
+                destroyed = true; // cur 被炸了
+                break;
             }
         }
+
+        if (!destroyed) {
+            stack[++top] = cur;
+        }
     }
-    return res;
+
+    *returnSize = top + 1;
+    return stack;
 }
