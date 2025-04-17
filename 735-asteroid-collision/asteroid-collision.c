@@ -1,25 +1,35 @@
 /**
  * Note: The returned array must be malloced, assume caller calls free().
  */
-int* asteroidCollision(int* nums, int numsSize, int* returnSize) {
-    int *ret = (int*)malloc(sizeof(int) * numsSize);
-    int top = -1;
+int* asteroidCollision(int* asteroids, int asteroidsSize, int* returnSize) {
+    int* res = (int*)malloc(sizeof(int) * asteroidsSize);
+    *returnSize = 0;
 
-    for(int i = 0; i < numsSize; i++){
-        if(top == -1 || nums[i] > 0){
-            ret[++top] = nums[i];
-        }
-        else{
-            while(top != -1 && abs(ret[top]) < abs(nums[i]) && ret[top] > 0) top--;
-            if(top == -1 || ret[top] < 0){
-                ret[++top] = nums[i];
-            }
-            else if(ret[top] + nums[i] == 0){
-                top--;
+    for(int i = 0; i < asteroidsSize; i++){
+        int speed = asteroids[i];
+        int index = (*returnSize) - 1;
+        res[(*returnSize)++] = speed;
+        if(speed < 0){
+            while(index >= 0 && speed < 0){
+                if(res[index] < 0){
+                    res[(*returnSize) - 1] = speed;
+                    break;
+                }
+                int sum = res[index] + speed;
+                if(sum > 0) {
+                    (*returnSize)--;
+                    break;
+                }
+                else if(sum == 0) {
+                    (*returnSize) = index;
+                    break;
+                }
+                else{
+                    res[index--] = speed;
+                    (*returnSize)--;
+                }
             }
         }
     }
-
-    *returnSize = top + 1;
-    return ret;
+    return res;
 }
