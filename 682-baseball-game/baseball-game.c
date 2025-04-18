@@ -17,19 +17,18 @@ int calPoints(char** operations, int operationsSize) {
             res += stack[top];
         }
         else{
-            bool minus = false;
+            bool neg = operations[i][0] == '-';
+            int start = neg ? 1 : 0;
             int len = strlen(operations[i]);
             int score = 0;
-            for(int j = 0; j < len; j++){
-                if(operations[i][j] == '-'){
-                    minus = true;
-                    continue;
-                }
+            for(int j = start; j < len; j++){
                 score = score * 10 + (operations[i][j] - '0');
             }
-            stack[++top] = minus ? 0-score : score;
+            stack[++top] = neg ? 0-score : score;
             res += stack[top];
         }
     }
+
+    free(stack);
     return res;
 }
